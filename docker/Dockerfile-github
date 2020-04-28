@@ -1,0 +1,9 @@
+FROM jetscape/base:v1.3
+
+COPY --chown=jetscape-user:jetscape-user JETSCAPE-DOCKER /home/jetscape-user/JETSCAPE
+RUN cd JETSCAPE && \
+	mkdir build && cd build && \
+	cmake .. && make
+
+RUN cd && mkdir bin && cd bin && ln -s ../JETSCAPE/build/runJetscape .
+ENV PATH="${PATH}:${HOME}/bin"
