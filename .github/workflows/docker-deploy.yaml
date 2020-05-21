@@ -1,9 +1,10 @@
 name: docker-deploy
 
-on: 
-  push:
-    tags:
-      - docker*
+on:
+  release: [published, created, edited, prereleased, released] 
+#  push:
+#    tags:
+#      - docker*
 
 jobs:
   deploy:
