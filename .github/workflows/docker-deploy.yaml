@@ -19,7 +19,7 @@ jobs:
         path: JETSCAPE-DOCKER
         
     - name: Copy Dockerfile
-      run: cp JETSCAPE-DOCKER/docker/Dockerfile-github Dockerfile
+      run: cp JETSCAPE-DOCKER/docker/Dockerfile.deploy Dockerfile
       
     #https://github.com/marketplace/actions/docker-publish
     #https://www.docker.com/blog/first-docker-github-action-is-here/
@@ -29,5 +29,5 @@ jobs:
        username: ${{ secrets.DOCKER_USERNAME }}
        password: ${{ secrets.DOCKER_PASSWORD }}
        repository: ${{ secrets.DOCKER_REPO }} 
-       tags: dockerize
+       tags: $GITHUB_REF
 
