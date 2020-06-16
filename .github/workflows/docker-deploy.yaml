@@ -2,7 +2,8 @@ name: docker-deploy
 
 on:
   release: 
-    types: [published, created, edited, prereleased, released] 
+    types: [published] 
+#    types: [published, created, edited, prereleased, released] 
 #  push:
 #    tags:
 #      - docker*
