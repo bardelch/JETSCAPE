@@ -17,6 +17,7 @@
 
 #include "PythiaGun.h"
 #include <sstream>
+#include <iostream>
 
 #define MAGENTA "\033[35m"
 
@@ -145,6 +146,12 @@ void PythiaGun::InitTask() {
 }
 
 void PythiaGun::Exec() {
+
+  ofstream WriteSigmaHard;
+  WriteSigmaHard.open("cross_section.dat",std::ios::out);
+  WriteSigmaHard<<GetSigmaGen()<<" "<<GetSigmaErr()<<endl;
+  WriteSigmaHard.close();
+
   VERBOSE(1) << "Run Hard Process : " << GetId() << " ...";
   VERBOSE(8) << "Current Event #" << GetCurrentEvent();
   //Reading vir_factor from xml for MATTER
