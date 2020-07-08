@@ -22,7 +22,7 @@
   <enableAutomaticTaskListDetermination> true </enableAutomaticTaskListDetermination>
   
   <!-- PythiaGun output settings, temp hack for jetscape school -->
-  <outputCrossSectionFile>cross_section.dat</outputCrossSectionFile>
+  <outputCrossSectionFile>cross_section</outputCrossSectionFile>
 
   <!--  JetScape Writer Settings -->
   <outputFilename>test_out</outputFilename>

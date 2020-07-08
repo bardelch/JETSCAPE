@@ -149,7 +149,7 @@ void PythiaGun::Exec() {
 
   ofstream WriteSigmaHard;
   //WriteSigmaHard.open("cross_section.dat",std::ios::out);
-  std::string cross_section_fileName = GetXMLElementText({"outputCrossSectionFile"});
+  std::string cross_section_fileName = GetXMLElementText({"outputCrossSectionFile"}).append(".dat");
   WriteSigmaHard.open(cross_section_fileName,std::ios::out);
   WriteSigmaHard<<GetSigmaGen()<<" "<<GetSigmaErr()<<endl;
   WriteSigmaHard.close();
