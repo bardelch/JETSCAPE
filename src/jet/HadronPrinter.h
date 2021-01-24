@@ -49,7 +49,11 @@ class HadronPrinter : public JetScapeModuleBase,
   }
   
   void PrintFinalHadron();
- 
+
+  std::string KinematicVariableS;
+  int KinematicVariableInt;
+  double minD, maxD;
+  
  private:
 
   vector<shared_ptr<Hadron>> finalHadrons;

@@ -321,4 +321,13 @@
       <only_decays>0</only_decays>
     </SMASH>
   </Afterburner>
+
+  <!-- Print Hadron info into a file -->
+  <HadronPrinter>
+    <OutputFileName>JetscapeHadronListBin.dat</OutputFileName>
+    <KinematicVariable>pt</KinematicVariable>  <!-- space sensitive: y, eta, pt, e, phi  -->
+    <min> 0.0   </min>  <!-- minimum value of Kinematic Variable -->
+    <max> 100.0 </max>  <!-- maximum value of Kinematic Variable -->
+  </HadronPrinter>
+
 </jetscape>
