@@ -1,4 +1,4 @@
-/*******************************************************************************
+/***A****************************************************************************
  * Copyright (c) The JETSCAPE Collaboration, 2020
  *
  * Modular, task-based framework for simulating all aspects of heavy-ion collisions
@@ -31,7 +31,21 @@ HadronPrinter::~HadronPrinter()
 void HadronPrinter::Init()
 {
   this->SetId("Printer");
-  fHadronOutfile.open("finalStateHadrons.dat");
+  std::string OutputFileName = GetXMLElementText({"HadronPrinter", "OutputFileName"});
+  fHadronOutfile.open(OutputFileName.c_str());
+
+  KinematicVariableS = GetXMLElementText({"HadronPrinter", "KinematicVariable"});
+  minD = GetXMLElementDouble({"HadronPrinter", "min"});
+  maxD = GetXMLElementDouble({"HadronPrinter", "max"});
+  
+  if(KinematicVariableS.compare("y")==0){KinematicVariableInt=1;}
+  if(KinematicVariableS.compare("eta")==0){KinematicVariableInt=2;}
+  if(KinematicVariableS.compare("pt")==0){KinematicVariableInt=3;}
+  if(KinematicVariableS.compare("e")==0){KinematicVariableInt=4;}
+  if(KinematicVariableS.compare("phi")==0){KinematicVariableInt=5;}
+  
+  JSINFO<<"HadronPrinter variable is "<<KinematicVariableS<<", Int="<<KinematicVariableInt;
+  
   JetScapeSignalManager::Instance()->ConnectGetFinalHadronListSignal(
       shared_from_this());
 
@@ -56,16 +70,47 @@ void HadronPrinter::WriteTask(weak_ptr<JetScapeWriter> w)
 
 void HadronPrinter::PrintFinalHadron(){
   char buffer [33];
+  //std:string y=1, eta=2, pt=3, e=4, phi=5;  //minD, maxD 
+  JSINFO << "HadronPrinter : starting to print hadrons:";
+  double y=0;
+   
+  fHadronOutfile << "#"<<KinematicVariableS<< endl;
+  for(auto it : finalHadrons)
+    {                                                                                                
+      Hadron h = *it.get();      
+      switch(KinematicVariableInt)
+	{ 
+	case 1:
+	  y = 0.5*log( (h.e() + h.pz())/(h.e() - h.pz()) );
+	  fHadronOutfile<<"  "<< y<<endl;
+	  break;
+	case 2:
+	  fHadronOutfile<<"  "<< h.eta()<<endl;
+	  break;
+	case 3:
+	  fHadronOutfile<<"  "<< h.pt()<<endl;
+	  break;
+	case 4: 
+	  fHadronOutfile<<"  "<< h.e()<<endl;
+	  break;   
+	case 5: 
+	  fHadronOutfile<<"  "<< h.phi()<<endl;
+	  break;
+	  
+	default:
+	  JSINFO << "The Kinematic variable isn’t valid";
+	}
+    }
 
-  JSINFO << "HadronPrinter : starting to print hadrons";
-  int i=0;
-    fHadronOutfile << "#  PID  pstat  E  Px  Py  Pz  eta  phi" << endl;
+  /*
+   int i=0;
+  fHadronOutfile << "#  PID  pstat  E  Px  Py  Pz  eta  phi" << endl;
   for(auto it : finalHadrons){
     Hadron h = *it.get();
     fHadronOutfile << i <<"  "<< h.pid() <<"  "<< h.pstat() <<"  "<< h.e() <<"  "<< h.px() <<"  "<< h.py() <<"  "<< h.pz() <<"  "<< h.eta() <<"  "<< h.phi() << endl;
     ++i;
   }
-
+  */
 }
 } 
 
